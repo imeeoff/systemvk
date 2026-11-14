@@ -178,6 +178,35 @@
     reveals.forEach(function (el) { el.classList.add('in'); });
   }
 
+  /* ---------- Одинаковая высота свёрнутых блоков ---------- */
+  var accGroups = document.querySelectorAll('.grid, .products');
+  function equalizeToggles() {
+    accGroups.forEach(function (group) {
+      var toggles = group.querySelectorAll('.acc-toggle');
+      if (!toggles.length) return;
+      toggles.forEach(function (t) { t.style.minHeight = ''; });
+      var cols = getComputedStyle(group).gridTemplateColumns.split(' ').length;
+      if (cols < 2) return; // в одну колонку выравнивать не нужно
+      var max = 0;
+      toggles.forEach(function (t) { max = Math.max(max, t.getBoundingClientRect().height); });
+      toggles.forEach(function (t) { t.style.minHeight = Math.ceil(max) + 'px'; });
+    });
+  }
+  equalizeToggles();
+  window.addEventListener('load', equalizeToggles);
+  window.addEventListener('resize', equalizeToggles);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(equalizeToggles);
+
+  /* ---------- Раскрывающиеся блоки ---------- */
+  document.querySelectorAll('.acc-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var card = btn.closest('.card');
+      var open = btn.getAttribute('aria-expanded') !== 'true';
+      btn.setAttribute('aria-expanded', String(open));
+      card.classList.toggle('open', open);
+    });
+  });
+
   /* ---------- Подсветка карточки за курсором ---------- */
   document.querySelectorAll('.card').forEach(function (card) {
     card.addEventListener('pointermove', function (e) {
