@@ -725,3 +725,39 @@ html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
   .unique { padding: 24px 20px; }
   .unique p { font-size: 15.5px; }
 }
+
+/* ---------- Продукция: блок «О продукте» ---------- */
+.goals { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.goals li {
+  position: relative;
+  padding: 20px 22px 20px 52px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  transition: border-color .3s ease;
+}
+.goals li:hover { border-color: var(--accent); }
+.goals li::before {
+  content: "";
+  position: absolute;
+  top: 26px; left: 22px;
+  width: 12px; height: 12px;
+  background: var(--accent);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%);
+}
+.goals li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+.materials { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.materials .card h3 { font-size: 22px; }
+.section-action { margin-top: 44px; }
+
+@media (max-width: 960px) {
+  .materials, .goals { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .goals li { padding: 16px 16px 16px 46px; font-size: 15px; }
+  .goals li::before { top: 22px; left: 18px; }
+  .materials { gap: 14px; }
+  .sub-head { margin: 36px 0 18px; }
+  .section-action .btn { width: 100%; }
+}
